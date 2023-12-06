@@ -2,26 +2,26 @@
     export let radius;
     import { onMount } from "svelte";
 
-    let casing, centerX, centerY;
+    let casing, centerX, centerY,center;
 
     onMount(()=>{
-        let center = casing.getBoundingClientRect();
+        center = casing.getBoundingClientRect();
         centerX = center.left + window.scrollX + center.width/2;
         centerY = center.top + window.scrollY + center.height/2;
-        console.log(centerX,centerY)
     })
 
 
     function pos2deg(centerX,centerY,posX,posY){
+        //input are absolute to page
         let dX = posX - centerX
         let dY = posY- centerY
-        // console.log(window.scrollY, 'fuck')
         return Math.atan2(dY,dX)
     }
 
     function deg2pos(centerX,centerY,deg){
-        let posX = radius * Math.cos(deg) + window.scrollX
-        let posY = radius * Math.sin(deg) + window.scrollY
+        //output will be relative to casing
+        let posX = radius * Math.cos(deg) + centerX - center.left
+        let posY = radius * Math.sin(deg) + centerY - center.top
         return [posX, posY];
     }
 
@@ -63,14 +63,13 @@
                      
                      let deg = pos2deg(centerX,centerY,touches.pageX,touches.pageY )
                      let coord = deg2pos(centerX,centerY,deg)
-                     console.log(coord)
 
-					//  node.style.top = `${coord[1]}px`;
-					//  node.style.left = `${coord[0]}px`;
+					 node.style.top = `${coord[1]}px`;
+					 node.style.left = `${coord[0]}px`;
                     // position.left = coord[0] 
                     //  position.top = coord[1] 
-                    node.style.top = `${top}px`;
-					 node.style.left = `${left}px`;
+                    // node.style.top = `${top}px`;
+					//  node.style.left = `${left}px`;
                      position.left = touches.pageX
                      position.top = touches.pageY
 
@@ -90,8 +89,13 @@
             if (moving) {
 					 left += e.movementX;
 					 top += e.movementY;
-					 node.style.top = `${top}px`;
-					 node.style.left = `${left}px`;
+
+
+                     let deg = pos2deg(centerX,centerY,e.pageX,e.pageY)
+                     let coord = deg2pos(centerX,centerY,deg)
+
+					 node.style.top = `${coord[1]}px`;
+					 node.style.left = `${coord[0]}px`;
 				}
          })
 
@@ -114,7 +118,5 @@
     <div class="circle w-full h-full bg-teal-800 rounded-full">
 
     </div>
-    <h1 use:dragMe >
-		Drag Me
-	</h1>
+    <h1 use:dragMe  class="rounded-full w-[50px] h-[50px] origin-center -ml-[25px] -mt-[25px]"></h1>
 </div>
