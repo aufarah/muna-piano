@@ -1,6 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --darkgreen: #29584fff;
+  --secondary-color: #000;
+}
 
 * {
   box-sizing:border-box
@@ -8,7 +15,7 @@
 
 body {
   margin:0;
-  background:#222
+  @apply bg-palely
 }
 
 ul {
@@ -76,4 +83,46 @@ ul li:first-child {
 
 ul li:last-child {
   border-radius:0 5px 5px 5px
+}
+
+@keyframes wave {
+  0% {background-position-x: 0px;}
+  100% {background-position-x: 100vw;}
+}
+
+@keyframes wavesm {
+  0% {background-position-x: 0px;}
+  100% {background-position-x: 200vw;}
+}
+
+.hill_1 {
+  position: absolute;
+  @apply bottom-0 left-0 w-full h-full ;
+  z-index: -50;
+  background-image: url('$lib/assets/hill_front.png');
+  @apply bg-[length:200%] md:bg-[length:100%];
+  @apply bg-[bottom_right] xl:bg-[bottom_-120pt_right];
+  background-repeat : repeat-x;
+  @apply animate-[wavesm] md:animate-[wave];
+  @apply animate-duration-[30s] md:animate-duration-[60s];
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.hill_2 {
+  position: absolute;
+  @apply bottom-0 left-0 w-full h-full ;
+  z-index: -50;
+  background-image: url('$lib/assets/hill_back.png');
+  @apply bg-[length:200%] md:bg-[length:100%];
+  @apply  bg-[bottom_150pt_right] xl:bg-[bottom_100pt_right];
+  background-repeat : repeat-x;
+  @apply animate-[wavesm] md:animate-[wave];
+  @apply animate-duration-[15s] md:animate-duration-[30s];
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.card{
+  box-shadow: 0px 10px 0px 5px var(--darkgreen);
 }

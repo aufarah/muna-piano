@@ -19,7 +19,7 @@
 </script>
 
 
-<div class="bg-teal-400 relative case" style="width:{radius*2}px;height:{radius*2}px" bind:this={casing}>
+<div class="relative case" style="width:{radius*2}px;height:{radius*2}px" bind:this={casing}>
     <div class="circle w-full h-full bg-teal-800 rounded-full">
         <Note bind:centerX bind:centerY radius={radius} initDeg={90*Math.PI/180}></Note>
         <Note bind:centerX bind:centerY radius={radius} initDeg={0*Math.PI/180}></Note>

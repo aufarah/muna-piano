@@ -1,10 +1,12 @@
 <script>
     import "../app.css";
+	import Navbar from "../lib/components/Navbar.svelte";
 </script>
 
 <div class="app">
 	<!-- <Header /> -->
-	<main>
+	<main class="h-screen w-screen">
+		<Navbar></Navbar>
 		<slot />
 	</main>
 

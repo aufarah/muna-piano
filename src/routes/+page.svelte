@@ -1,4 +1,5 @@
 <script>
+    import CardTuning from '../lib/components/CardTuning.svelte';
     import Keyboard from'$lib/components/Keyboard.svelte';
     import Wheel from '../lib/components/Wheel.svelte';
 
@@ -12,12 +13,16 @@
     }
 </script>
 
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
-<Keyboard base_frequency={base_frequency} mode={mode}></Keyboard>
+<!-- <div class=""> -->
+
+    <!-- <div class="bg-teal-400 h-[50%]"></div> -->
+<div class="hill_2"></div>
+<div class="hill_1"></div>
+
+<CardTuning></CardTuning>
+<!-- </div> -->
+<!-- <Keyboard base_frequency={base_frequency} mode={mode}></Keyboard>
 
 <Wheel radius=200></Wheel>
-<Wheel radius=300></Wheel>
+<Wheel radius=300></Wheel> -->
 
-<div class="w-[900px] h-[900px] bg-teal-300"></div>
-<p class="white">wkwkwk</p>

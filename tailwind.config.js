@@ -2,8 +2,19 @@
 export default {
   content: ['./src/**/*.{html,js,svelte,ts}'],
   theme: {
-    extend: {},
+    extend: {
+      colors:{
+        "darkgreen" : "var(--darkgreen)",
+        "palely" : "#ede7d4ff",
+        "chocomilk" : "#e6ceafff",
+        "orange" : "#ef8d2fff",
+        "turkish" : "#399b88ff",
+        "matchamilk" : "#9fdeb3ff"
+      }
+    },
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-animated')
+  ],
 }
 
