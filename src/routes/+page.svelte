@@ -17,6 +17,7 @@
 <Keyboard base_frequency={base_frequency} mode={mode}></Keyboard>
 
 <Wheel radius=200></Wheel>
+<Wheel radius=300></Wheel>
 
 <div class="w-[900px] h-[900px] bg-teal-300"></div>
 <p class="white">wkwkwk</p>
