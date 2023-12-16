@@ -112,6 +112,8 @@
 	}
 </style> -->
 
+<svelte:options accessors/>
+
 <div use:dragMe class="note rounded-full w-[50px] h-[50px] origin-center -ml-[25px] -mt-[25px] bg-orange" bind:this={elem}>
     {note_id}
 </div>
