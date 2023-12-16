@@ -1,5 +1,6 @@
 <script>
     export let radius, centerX,centerY,initDeg
+    export let note_id, note_name
     import { onMount } from "svelte";
 
     let anu = ''
@@ -59,6 +60,7 @@
 					 top += movementTop
                      
                      let deg = pos2deg(touches.pageX,touches.pageY )
+                     initDeg = deg
                      let coord = deg2pos(deg)
 
 					 node.style.top = `${coord[1]}px`;
@@ -88,6 +90,7 @@
 
 
                      let deg = pos2deg(e.pageX,e.pageY)
+                     initDeg = deg
                      let coord = deg2pos(deg)
 
 					 node.style.top = `${coord[1]}px`;
@@ -103,10 +106,12 @@
 
 </script>
 
-<style>
+<!-- <style>
 	.note {
 		border: solid 1px grey;
 	}
-</style>
+</style> -->
 
-<div use:dragMe class="note rounded-full w-[50px] h-[50px] origin-center -ml-[25px] -mt-[25px]" bind:this={elem}></div>
+<div use:dragMe class="note rounded-full w-[50px] h-[50px] origin-center -ml-[25px] -mt-[25px] bg-orange" bind:this={elem}>
+    {note_id}
+</div>
