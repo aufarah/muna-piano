@@ -1,10 +1,10 @@
 <script>
     export let note_id
-    import {notes} from "./stores.js"
+    import {scale_config} from "./stores.js"
 
     let delete_note = () => {
-        delete $notes[note_id] 
-        $notes = $notes
+        delete $scale_config.mode.values[note_id] 
+        $scale_config = $scale_config
         note_id-=1
     }
 </script>

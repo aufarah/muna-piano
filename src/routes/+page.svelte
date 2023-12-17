@@ -21,8 +21,7 @@
 
 <CardTuning></CardTuning>
 <!-- </div> -->
-<!-- <Keyboard base_frequency={base_frequency} mode={mode}></Keyboard>
+<Keyboard></Keyboard>
 
-<Wheel radius=200></Wheel>
-<Wheel radius=300></Wheel> -->
+
 

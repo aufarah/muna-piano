@@ -6,7 +6,6 @@
     import Note from "./Note.svelte";
     import WheelGrid from "./WheelGrid.svelte";
 
-    import {notes} from "./stores.js";
     import {scale_config} from "./stores.js";
 
     import { nanoid } from 'nanoid'
@@ -23,13 +22,13 @@
     })
 
 
-    $: console.log($notes)
+    // $: console.log($scale_config.mode.values)
 
     let add_note = () => {
-        $notes[nanoid()] = {
+        $scale_config.mode.values[nanoid()] = {
             angle : Math.random()*2*Math.PI
         }
-        $notes = $notes
+        $scale_config = $scale_config
     }
 
     // $:
@@ -49,8 +48,8 @@
             box-shadow : 0px 0px 0px {borderWidth/2}px var(--palely);
         ">
 
-        {#each Object.keys($notes) as note_key}
-            <Note centerX={centerX} centerY={centerY} radius={radius} initDeg={$notes[note_key].angle} note_id={note_key}></Note>
+        {#each Object.keys($scale_config.mode.values) as note_key}
+            <Note centerX={centerX} centerY={centerY} radius={radius} initDeg={$scale_config.mode.values[note_key].angle} note_id={note_key}></Note>
         {/each}
         
         <!-- <Note bind:centerX bind:centerY radius={radius} initDeg={0*Math.PI/180}></Note> -->

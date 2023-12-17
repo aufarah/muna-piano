@@ -1,27 +1,32 @@
 import { writable } from 'svelte/store';
 import { nanoid } from 'nanoid'
 
-let initial = {}
-initial[nanoid() ] = {
-    angle : 0
-}
+// let initial = {}
+// initial[nanoid() ] = {
+//     angle : 0
+// }
 
-export const notes = writable(initial);
+// export const notes = writable(initial);
 
-initial = {
+let initial = {
     "name" : "my_scale",
     "base_frequency" : 440,
     "scale_ratio": 2, //an octave 2:1
     "mode" : {
-        "type" : "division",
+        "unit" : "division",
         "division" : 12, 
         "relative": false,
         "values" : {}
     },
     "clipping": true
 }
-initial.mode.values[nanoid() ] = {
-    angle : 0
+
+let major = [0,2,4,5,7,9,11]
+for (let item of major){
+    initial.mode.values[nanoid() ] = {
+        // angle : item*2*Math.PI/12
+        angle : item
+    }
 }
 
 export const scale_config = writable(initial);

@@ -3,7 +3,6 @@
     export let note_id, note_name
     import ContextNote from "./ContextNote.svelte";
 
-    import {notes} from "./stores.js"
     import {scale_config} from "./stores.js";
 
     import {clickOutside} from "./clickOutside"
@@ -31,10 +30,10 @@
         refreshNote()
     }
 
-    // $: $notes.note_id.angle = initDeg
+    // $: $scale_config.mode.values.note_id.angle = initDeg
 
     $: if (elem) {
-        $notes[note_id] = {
+        $scale_config.mode.values[note_id] = {
             angle : initDeg
         }
         refreshNote()
@@ -44,11 +43,22 @@
         //input are absolute to page
         let dX = posX - centerX
         let dY = posY- centerY
-        return Math.atan2(dY,dX)+Math.PI/2
+        let deg = Math.atan2(dY,dX)+Math.PI/2
+        switch ($scale_config.mode.unit){
+            case 'division':
+                deg = deg * $scale_config.mode.division / (2*Math.PI)
+                break;
+        }
+        return deg
     }
 
     function deg2pos(deg){
         //output will be relative to casing
+        switch ($scale_config.mode.unit){
+            case 'division':
+                deg = deg * 2*Math.PI/($scale_config.mode.division)
+                break;
+        }
         let posX = radius * Math.cos(deg-Math.PI/2) + centerX - (centerX-radius)
         let posY = radius * Math.sin(deg-Math.PI/2) + centerY - (centerY-radius)
         return [posX, posY];
@@ -115,16 +125,24 @@
          window.addEventListener('mousemove', (e) => {
             if (moving) {
                     anu="gerak"
-					 left += e.movementX;
-					 top += e.movementY;
+                    left += e.movementX;
+                    top += e.movementY;
 
 
-                     let deg = pos2deg(e.pageX,e.pageY)
+                    let deg = pos2deg(e.pageX,e.pageY)
 
                     //rounding logic
                     if ($scale_config.clipping){
-                        let in12 = deg/(2*Math.PI) * $scale_config.mode.division
-                        deg = (2 * Math.PI) * Math.round(in12) / $scale_config.mode.division 
+                        switch ($scale_config.mode.unit){
+                            case 'division':
+                                deg = Math.round(deg)
+                                break;
+                            default:  //radian
+                                let in12 = deg/(2*Math.PI) * $scale_config.mode.division
+                                deg = (2 * Math.PI) * Math.round(in12) / $scale_config.mode.division 
+                                break;
+                        }
+
                      }
 
                      initDeg = deg
