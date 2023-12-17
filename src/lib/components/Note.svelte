@@ -1,6 +1,13 @@
 <script>
     export let radius, centerX,centerY,initDeg
     export let note_id, note_name
+    import ContextNote from "./ContextNote.svelte";
+
+    import {notes} from "./stores.js"
+    import {scale_config} from "./stores.js";
+
+    import {clickOutside} from "./clickOutside"
+    import {get } from 'svelte/store';
     import { onMount } from "svelte";
 
     let anu = ''
@@ -8,26 +15,42 @@
     let initial, left, top; 
     let not_loaded = true
 
-    $: if(centerX!== undefined&&elem&&not_loaded) {
+    let popper = false
+
+    let refreshNote = () => {
+        //idk why we should repeat these again:
         initial = deg2pos(initDeg)
         left = initial[0]
         top = initial[1]
         elem.style.top = `${top}px`;
 		elem.style.left = `${left}px`;
-        not_loaded=false
+        popper = false
     }
 
+    $: if(centerX!== undefined&&elem&&not_loaded) {
+        refreshNote()
+    }
+
+    // $: $notes.note_id.angle = initDeg
+
+    $: if (elem) {
+        $notes[note_id] = {
+            angle : initDeg
+        }
+        refreshNote()
+    }
+    
     function pos2deg(posX,posY){
         //input are absolute to page
         let dX = posX - centerX
         let dY = posY- centerY
-        return Math.atan2(dY,dX)
+        return Math.atan2(dY,dX)+Math.PI/2
     }
 
     function deg2pos(deg){
         //output will be relative to casing
-        let posX = radius * Math.cos(deg) + centerX - (centerX-radius)
-        let posY = radius * Math.sin(deg) + centerY - (centerY-radius)
+        let posX = radius * Math.cos(deg-Math.PI/2) + centerX - (centerX-radius)
+        let posY = radius * Math.sin(deg-Math.PI/2) + centerY - (centerY-radius)
         return [posX, posY];
     }
 
@@ -60,6 +83,13 @@
 					 top += movementTop
                      
                      let deg = pos2deg(touches.pageX,touches.pageY )
+
+                    //rounding logic
+                     if ($scale_config.clipping){
+                        let in12 = deg/(2*Math.PI) * $scale_config.mode.division
+                        deg = (2 * Math.PI) * Math.round(in12) / $scale_config.mode.division 
+                     }
+
                      initDeg = deg
                      let coord = deg2pos(deg)
 
@@ -90,6 +120,13 @@
 
 
                      let deg = pos2deg(e.pageX,e.pageY)
+
+                    //rounding logic
+                    if ($scale_config.clipping){
+                        let in12 = deg/(2*Math.PI) * $scale_config.mode.division
+                        deg = (2 * Math.PI) * Math.round(in12) / $scale_config.mode.division 
+                     }
+
                      initDeg = deg
                      let coord = deg2pos(deg)
 
@@ -104,6 +141,15 @@
             });
         }
 
+        
+        let popper_show = () => {
+            popper = true;
+            event.stopPropagation();
+        }
+        let popper_hide = () => {
+            popper = false
+        }
+
 </script>
 
 <!-- <style>
@@ -115,5 +161,15 @@
 <svelte:options accessors/>
 
 <div use:dragMe class="note rounded-full w-[50px] h-[50px] origin-center -ml-[25px] -mt-[25px] bg-orange" bind:this={elem}>
-    {note_id}
+    <button on:click={popper_show}>{note_id}</button>
+    {#if popper}
+    <div use:clickOutside={
+        ()=>{
+            console.log('anying')
+            popper=false
+        }
+    }>
+        <ContextNote note_id={note_id} ></ContextNote>
+    </div>
+    {/if}
 </div>

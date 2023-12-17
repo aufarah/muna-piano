@@ -19,6 +19,27 @@ body {
   @apply bg-palely
 }
 
+h1 {
+  @apply text-[35pt] font-bold font-[Montserrat] text-darkgreen;
+}
+
+p {
+  @apply text-[20pt] font-[Montserrat] text-darkgreen;
+}
+
+label {
+  @apply text-[20pt] font-[Montserrat] text-darkgreen;
+}
+
+input {
+  @apply rounded-full bg-palely border-darkgreen p-2 pl-8 text-[20pt]  text-darkgreen mt-2;
+}
+
+input.checkbox{
+  @apply h-[20pt];
+  aspect-ratio: 1;
+}
+
 ul {
   height:18.875em;
   width:34em;

@@ -4,6 +4,12 @@
 
     import { onDestroy, onMount } from "svelte";
     import Note from "./Note.svelte";
+    import WheelGrid from "./WheelGrid.svelte";
+
+    import {notes} from "./stores.js";
+    import {scale_config} from "./stores.js";
+
+    import { nanoid } from 'nanoid'
     import ContextNote from "./ContextNote.svelte";
 
     let casing, centerX, centerY,center, centerLeft,centerTop, borderWidth=16;
@@ -16,30 +22,14 @@
         centerY = center.top + window.scrollY + center.height/2;
     })
 
-    let note_id = 0
-    let Notes = {
-        0: {
-            angle : 0 //in radian
-        }
-    }
 
-    $: console.log(Notes)
+    $: console.log($notes)
 
     let add_note = () => {
-        note_id+=1
-        Notes[note_id] = {
-            angle : note_id*15
+        $notes[nanoid()] = {
+            angle : Math.random()*2*Math.PI
         }
-    }
-
-    let delete_note = () => {
-        // nodeRef
-        // console.log(Notes[note_id].elem)
-        // let anu = Notes[note_id].elem.$destroy()
-        // console.log(anu)
-        delete Notes[note_id] 
-        Notes = Notes
-        note_id-=1
+        $notes = $notes
     }
 
     // $:
@@ -47,23 +37,23 @@
 
 <div class="relative case" style="
         width:{radius*2}px;
-        height:{radius*2}px;" 
+        height:{radius*2}px;
+        aspect-ratio:1" 
     bind:this={casing}>
+    <div class="absolute">
+        <WheelGrid step={$scale_config.mode.division}/>
+    </div>
     <div class="wheel circle w-full h-full border-palely  rounded-full"
         style="
             border-width: {borderWidth/2}px;
             box-shadow : 0px 0px 0px {borderWidth/2}px var(--palely);
         ">
 
-        {console.log('wkwkw',Object.keys(Notes))}
-        {#each Object.keys(Notes) as note_key}
-        {#if (Notes[note_key]!=undefined)}
-            <Note bind:centerX bind:centerY radius={radius} bind:initDeg={Notes[note_key].angle} bind:note_id={note_key}></Note>
-        {/if}
+        {#each Object.keys($notes) as note_key}
+            <Note centerX={centerX} centerY={centerY} radius={radius} initDeg={$notes[note_key].angle} note_id={note_key}></Note>
         {/each}
         
         <!-- <Note bind:centerX bind:centerY radius={radius} initDeg={0*Math.PI/180}></Note> -->
     </div>
     <button on:click={add_note}>wkw</button>
-    <button on:click={delete_note}>hihi</button>
 </div>
