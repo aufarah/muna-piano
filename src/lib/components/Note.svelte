@@ -2,7 +2,7 @@
     export let radius, centerX,centerY,initDeg
     export let note_id, note_name
     import ContextNote from "./ContextNote.svelte";
-
+    import { writable } from 'svelte/store';
     import {scale_config} from "./stores.js";
 
     import {clickOutside} from "./clickOutside"
@@ -11,6 +11,9 @@
 
     let anu = ''
     let elem;
+    
+    let intra_trigger = writable(0);
+    let current_division, current_unit, old_division, old_unit;
     let initial, left, top; 
     let not_loaded = true
 
@@ -18,7 +21,7 @@
 
     let refreshNote = () => {
         //idk why we should repeat these again:
-        initial = deg2pos(initDeg)
+        initial = unit2pos(initDeg)
         left = initial[0]
         top = initial[1]
         elem.style.top = `${top}px`;
@@ -32,14 +35,53 @@
 
     // $: $scale_config.mode.values.note_id.angle = initDeg
 
+    // $: {
+    //     old_unit = current_unit
+    //     old_division = current_division
+    //     current_unit  = $scale_config['mode']['unit']
+    //     current_division  = $scale_config['mode']['division']
+    //     $intra_trigger += 1
+    // }
+
+    // $: {
+    //     let deg;
+    //     $intra_trigger
+    //     switch (current_unit){
+    //         case 'division':
+    //             deg = rad * current_division / old_division
+    //             break
+    //     }
+    //     $scale_config.mode.values[note_id] = {
+    //         angle : initDeg
+    //     }
+    // }
+    
     $: if (elem) {
+
         $scale_config.mode.values[note_id] = {
             angle : initDeg
         }
         refreshNote()
     }
     
-    function pos2deg(posX,posY){
+    function pos2rad(posX,posY){
+        //input are absolute to page
+        let dX = posX - centerX
+        let dY = posY- centerY
+        let deg = Math.atan2(dY,dX)+Math.PI/2
+        return deg
+    }
+
+    function rad2unit(rad){
+        switch ($scale_config.mode.unit){
+            case 'division':
+                let deg = rad * $scale_config.mode.division / (2*Math.PI)
+                return deg
+                break;
+        }
+    }
+
+    function pos2unit(posX,posY){
         //input are absolute to page
         let dX = posX - centerX
         let dY = posY- centerY
@@ -52,7 +94,7 @@
         return deg
     }
 
-    function deg2pos(deg){
+    function unit2pos(deg){
         //output will be relative to casing
         switch ($scale_config.mode.unit){
             case 'division':
@@ -92,7 +134,7 @@
 					 left += movementLeft
 					 top += movementTop
                      
-                     let deg = pos2deg(touches.pageX,touches.pageY )
+                     let deg = pos2unit(touches.pageX,touches.pageY )
 
                     //rounding logic
                      if ($scale_config.clipping){
@@ -101,7 +143,7 @@
                      }
 
                      initDeg = deg
-                     let coord = deg2pos(deg)
+                     let coord = unit2pos(deg)
 
 					 node.style.top = `${coord[1]}px`;
 					 node.style.left = `${coord[0]}px`;
@@ -129,7 +171,7 @@
                     top += e.movementY;
 
 
-                    let deg = pos2deg(e.pageX,e.pageY)
+                    let deg = pos2unit(e.pageX,e.pageY)
 
                     //rounding logic
                     if ($scale_config.clipping){
@@ -146,7 +188,7 @@
                      }
 
                      initDeg = deg
-                     let coord = deg2pos(deg)
+                     let coord = unit2pos(deg)
 
 					 node.style.top = `${coord[1]}px`;
 					 node.style.left = `${coord[0]}px`;

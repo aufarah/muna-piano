@@ -1,6 +1,8 @@
 <script>
     import Wheel from "./Wheel.svelte";
     import {scale_config} from "./stores.js"
+
+    // $: console.log($scale_config.mode.values)
 </script>
 
 <div class="card rounded-3xl p-8 h-fit min-w-[700px] max-w-[1000px] bg-chocomilk flex flex-row">

@@ -16,6 +16,7 @@
                     break;
             }
             frequency_values.push(curr_frequency)
+            // console.log('f', frequency_values)
         }
     }
 
