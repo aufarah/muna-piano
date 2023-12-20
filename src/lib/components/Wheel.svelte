@@ -25,8 +25,9 @@
     // $: console.log($scale_config.mode.values)
 
     let add_note = () => {
+
         $scale_config.mode.values[nanoid()] = {
-            angle : Math.random()*2*Math.PI
+            angle : Math.random()*$scale_config.mode.division
         }
         $scale_config = $scale_config
     }

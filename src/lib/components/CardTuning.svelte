@@ -3,6 +3,22 @@
     import {scale_config} from "./stores.js"
 
     // $: console.log($scale_config.mode.values)
+    let division = $scale_config['mode']['division']
+    let unit = $scale_config.mode.unit
+
+    $: console.log($scale_config)
+    $:{
+        //when division change, update all:
+        // let old_division = 
+        switch (unit){
+                case 'division':
+                    for (const note_id in $scale_config['mode']['values']){
+                        $scale_config['mode']['values'][note_id]['angle'] = $scale_config['mode']['values'][note_id]['angle'] * division / $scale_config['mode']['division']
+                    }
+                    break;
+                }
+        $scale_config['mode']['division'] = division
+    }
 </script>
 
 <div class="card rounded-3xl p-8 h-fit min-w-[700px] max-w-[1000px] bg-chocomilk flex flex-row">
@@ -14,7 +30,7 @@
             <input type="number" id="pickBaseFreq" bind:value={$scale_config['base_frequency']} list="baseFreq" >
 
             <label for="division">Division</label>
-            <input type="number" id="division" bind:value={$scale_config['mode']['division']} list="commonStep" >
+            <input type="number" id="division" bind:value={division} list="commonStep" >
 
             <label for="scale_ratio">Scale Ratio</label>
             <input type="number" id="scale_ratio" bind:value={$scale_config['scale_ratio']} list="commonRatio" >
