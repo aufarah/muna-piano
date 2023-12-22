@@ -14,6 +14,7 @@ let initial = {
     "scale_ratio": 2, //an octave 2:1
     "mode" : {
         "unit" : "division",
+        "root" : 0,
         "division" : 12, 
         "relative": false,
         "values" : {}

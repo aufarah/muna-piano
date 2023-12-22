@@ -7,7 +7,9 @@ export default {
         "darkgreen" : "var(--darkgreen)",
         "palely" : "var(--palely)",
         "chocomilk" : "#e6ceafff",
-        "orange" : "#ef8d2fff",
+        "orange" : "var(--orange)",
+        "midorange" : "#d8661fff",
+        "darkorange" : "#ad5120ff",
         "turkish" : "#399b88ff",
         "matchamilk" : "#9fdeb3ff"
       }

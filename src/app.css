@@ -6,6 +6,7 @@
 
 :root {
   --darkgreen: #29584fff;
+  --orange : #ef8d2fff;
   --palely: #ede7d4ff;
   --secondary-color: #000;
 }
@@ -158,5 +159,5 @@ ul li:last-child {
 }
 
 .note_button {
-  @apply rounded-full w-[30px] h-[30px] origin-center bg-matchamilk hover:bg-darkgreen;
+  @apply rounded-full w-[30px] h-[30px] origin-center bg-orange hover:bg-midorange focus:bg-darkorange;
 }

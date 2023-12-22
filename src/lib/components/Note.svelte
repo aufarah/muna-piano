@@ -18,7 +18,6 @@
 
     let popper = false
 
-    $: console.log($scale_config.mode.values[note_id])
     let refreshNote = () => {
         //idk why we should repeat these again:
         initial = unit2pos(initDeg)
