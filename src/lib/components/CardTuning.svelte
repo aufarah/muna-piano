@@ -30,6 +30,23 @@
 </script>
 
 <div class="card rounded-3xl p-8 h-fit min-w-[700px] max-w-[1000px] bg-chocomilk flex flex-row">
+    <div>
+        <select name="mode" id="mode" size="8">
+            <optgroup label="Wester">
+                <option value="major">Major Scale</option>
+                <option value="javascript">JavaScript</option>
+                <option value="php">PHP</option>
+                <option value="java">Java</option>
+                <option value="golang">Golang</option>
+              </optgroup>
+              <optgroup label="second-choice">
+                <option value="python">Python</option>
+                <option value="c#">C#</option>
+                <option value="C++">C++</option>
+                <option value="erlang">Erlang</option>
+              </optgroup>
+          </select>
+    </div>
     <Wheel radius=140></Wheel>
     <div class="ml-[3rem]">
         <h1>Tuning</h1>
