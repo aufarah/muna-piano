@@ -7,17 +7,25 @@
     let unit = $scale_config.mode.unit
 
     $: console.log($scale_config)
+
     $:{
         //when division change, update all:
         // let old_division = 
+        let real_division = division
+        if (division==null || division <=0) {
+            real_division  = 1
+        }
         switch (unit){
                 case 'division':
-                    for (const note_id in $scale_config['mode']['values']){
-                        $scale_config['mode']['values'][note_id]['angle'] = $scale_config['mode']['values'][note_id]['angle'] * division / $scale_config['mode']['division']
+                    if (real_division > 0){
+                        for (const note_id in $scale_config['mode']['values']){
+                            $scale_config['mode']['values'][note_id]['angle'] = $scale_config['mode']['values'][note_id]['angle'] * real_division / $scale_config['mode']['division']
+                        }   
                     }
+
                     break;
                 }
-        $scale_config['mode']['division'] = division
+        $scale_config['mode']['division'] = real_division
     }
 </script>
 
