@@ -22,17 +22,18 @@
 </script>
 
 <div class="card rounded-3xl p-8 h-fit min-w-[700px] max-w-[1000px] bg-chocomilk flex flex-row">
-    <Wheel radius=200></Wheel>
+    <Wheel radius=140></Wheel>
     <div class="ml-[3rem]">
         <h1>Tuning</h1>
         <div>
-            <label for="pickBaseFreq">Base Frequency (Hz)</label>
+            <label for="pickBaseFreq" class="block">Base Frequency (Hz)</label>
             <input type="number" id="pickBaseFreq" bind:value={$scale_config['base_frequency']} list="baseFreq" >
 
-            <label for="division">Division</label>
+
+            <label for="division" class="block">Division</label>
             <input type="number" id="division" bind:value={division} list="commonStep" >
 
-            <label for="scale_ratio">Scale Ratio</label>
+            <label for="scale_ratio" class="block">Scale Ratio</label>
             <input type="number" id="scale_ratio" bind:value={$scale_config['scale_ratio']} list="commonRatio" >
         </div>
 

@@ -6,6 +6,7 @@ export function clickOutside(element, callbackFunction) {
     }
     
     document.body.addEventListener('click', onClick);
+    document.body.addEventListener('contextmenu', onClick);
     
     return {
         update(newCallbackFunction) {

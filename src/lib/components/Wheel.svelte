@@ -40,7 +40,7 @@
         height:{radius*2}px;
         aspect-ratio:1" 
     bind:this={casing}>
-    <div class="absolute">
+    <div class="absolute w-full h-full">
         <WheelGrid step={$scale_config.mode.division}/>
     </div>
     <div class="wheel circle w-full h-full border-palely  rounded-full"
@@ -55,5 +55,5 @@
         
         <!-- <Note bind:centerX bind:centerY radius={radius} initDeg={0*Math.PI/180}></Note> -->
     </div>
-    <button on:click={add_note}>wkw</button>
+    <button on:click={add_note}>Add Note</button>
 </div>

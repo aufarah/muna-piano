@@ -1,6 +1,6 @@
 <script>
     export let radius, centerX,centerY,initDeg
-    export let note_id, note_name
+    export let note_id
     import ContextNote from "./ContextNote.svelte";
     import { writable } from 'svelte/store';
     import {scale_config} from "./stores.js";
@@ -11,14 +11,14 @@
 
     let anu = ''
     let elem;
-    
-    let intra_trigger = writable(0);
-    let current_division, current_unit, old_division, old_unit;
+    let moving = false;
+    let aftermoving = false
     let initial, left, top; 
     let not_loaded = true
 
     let popper = false
 
+    $: console.log($scale_config.mode.values[note_id])
     let refreshNote = () => {
         //idk why we should repeat these again:
         initial = unit2pos(initDeg)
@@ -58,9 +58,8 @@
     
     $: if (elem) {
 
-        $scale_config.mode.values[note_id] = {
-            angle : initDeg
-        }
+        $scale_config.mode.values[note_id].angle = initDeg
+    
         refreshNote()
     }
     
@@ -107,8 +106,6 @@
     }
 
 	function dragMe(node) {
-        let moving = false;
-
          let position = {
             left: null,
             top: null
@@ -121,6 +118,7 @@
 
         node.addEventListener('touchstart', (e) => {
                 moving = true;
+                aftermoving = false;
                 let touches = e.touches[0]
                 position.left = touches.pageX 
                 position.top = touches.pageY
@@ -131,15 +129,24 @@
                      let touches = e.touches[0]
                      let movementLeft = touches.pageX - position.left
                      let movementTop = touches.pageY - position.top
+                     if (movementLeft!=0 || movementTop!=0) aftermoving = true;
 					 left += movementLeft
 					 top += movementTop
                      
                      let deg = pos2unit(touches.pageX,touches.pageY )
 
                     //rounding logic
-                     if ($scale_config.clipping){
-                        let in12 = deg/(2*Math.PI) * $scale_config.mode.division
-                        deg = (2 * Math.PI) * Math.round(in12) / $scale_config.mode.division 
+                    if ($scale_config.clipping){
+                        switch ($scale_config.mode.unit){
+                            case 'division':
+                                deg = Math.round(deg)
+                                break;
+                            default:  //radian
+                                let in12 = deg/(2*Math.PI) * $scale_config.mode.division
+                                deg = (2 * Math.PI) * Math.round(in12) / $scale_config.mode.division 
+                                break;
+                        }
+
                      }
 
                      initDeg = deg
@@ -161,12 +168,14 @@
 
          node.addEventListener('mousedown', (e) => {
                 moving = true;
-                anu = "teken"
+                aftermoving = false;
         });
 
          window.addEventListener('mousemove', (e) => {
             if (moving) {
                     anu="gerak"
+
+                    if (e.movementX!=0 || e.movementY!=0) aftermoving = true;
                     left += e.movementX;
                     top += e.movementY;
 
@@ -196,18 +205,23 @@
          })
 
          window.addEventListener('mouseup', () => {
-             anu ="lepas"
-                moving = false;
+            // actually_moving = false
+            moving = false;
             });
         }
 
         
         let popper_show = () => {
-            popper = true;
-            event.stopPropagation();
+            if (aftermoving == false){
+                popper = true;
+                event.stopPropagation();
+                return false;
+            }
+
         }
         let popper_hide = () => {
             popper = false
+            return false;
         }
 
 </script>
@@ -220,16 +234,12 @@
 
 <svelte:options accessors/>
 
-<div use:dragMe class="note rounded-full w-[50px] h-[50px] origin-center -ml-[25px] -mt-[25px] bg-orange" bind:this={elem}>
-    <button on:click={popper_show}>{note_id}</button>
+
+<button use:dragMe use:clickOutside={popper_hide} class="note rounded-full w-[15%] h-[15%] origin-center -ml-[7.5%] -mt-[7.5%] bg-orange" bind:this={elem} on:contextmenu|preventDefault={()=>{popper_show(); return false}}>
+    <button on:click={popper_show} class="note note_button  ">{$scale_config.mode.values[note_id]['note_name']}</button>
     {#if popper}
-    <div use:clickOutside={
-        ()=>{
-            console.log('anying')
-            popper=false
-        }
-    }>
+    <div use:clickOutside={popper_hide}>
         <ContextNote note_id={note_id} ></ContextNote>
     </div>
     {/if}
-</div>
+</button>
