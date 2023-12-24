@@ -1,12 +1,39 @@
 <script>
     import Wheel from "./Wheel.svelte";
     import {scale_config} from "./stores.js"
+    import {modes} from './modes'
+    import { nanoid } from 'nanoid'
 
     // $: console.log($scale_config.mode.values)
     let division = $scale_config['mode']['division']
     let unit = $scale_config.mode.unit
+    let selected_mode = [1,0]
 
-    $: console.log($scale_config)
+    let pickFromList = () => {
+        let i = 1
+        let values = {}
+        let my_mode = modes[selected_mode[0]].member[selected_mode[1]]
+        for (let item of  my_mode.notes){
+            values[nanoid() ] = {
+                note_name : i,
+                angle : item
+            }
+            i++;
+        }
+        division = my_mode.division;
+        $scale_config.mode = {
+            "unit" : "division",
+            "root" : my_mode.root,
+            "division" : my_mode.division, 
+            "relative": false,
+            "values" : values
+        }
+        // console.log($scale_config) -> will trigger recursive
+    }
+
+    pickFromList()
+
+
 
     $:{
         //when division change, update all:
@@ -31,21 +58,15 @@
 
 <div class="card rounded-3xl p-8 h-fit min-w-[700px] max-w-[1000px] bg-chocomilk flex flex-row">
     <div>
-        <select name="mode" id="mode" size="8">
-            <optgroup label="Wester">
-                <option value="major">Major Scale</option>
-                <option value="javascript">JavaScript</option>
-                <option value="php">PHP</option>
-                <option value="java">Java</option>
-                <option value="golang">Golang</option>
-              </optgroup>
-              <optgroup label="second-choice">
-                <option value="python">Python</option>
-                <option value="c#">C#</option>
-                <option value="C++">C++</option>
-                <option value="erlang">Erlang</option>
-              </optgroup>
-          </select>
+        <select name="mode" id="mode" size="8" bind:value={selected_mode} on:change={pickFromList}>
+            {#each modes as group, group_idx}
+            <optgroup label={group.group_name}>
+                {#each group.member as member, member_idx}
+                    <option value={[group_idx, member_idx]}>{member.name}</option>
+                {/each}
+            </optgroup>
+            {/each}
+        </select>
     </div>
     <Wheel radius=140></Wheel>
     <div class="ml-[3rem]">

@@ -12,6 +12,7 @@
     import ContextNote from "./ContextNote.svelte";
 
     let casing, centerX, centerY,center, centerLeft,centerTop, borderWidth=16;
+    let wheel;
 
     onMount(()=>{
         center = casing.getBoundingClientRect();
@@ -22,7 +23,10 @@
     })
 
 
-    // $: console.log($scale_config.mode.values)
+    $: if(wheel){
+        // console.log($scale_config.mode)
+        wheel.style.transform = `rotate(${$scale_config.mode.root/$scale_config.mode.division * 360}deg)`
+    }
 
     let add_note = () => {
 
@@ -48,6 +52,11 @@
     function dragMe(node) {
         let moving = false, aftermoving = false;
         let left = centerX, top = centerY
+
+        let position = {
+            left: null,
+            top: null
+         }
 
 		 node.style.cursor = 'move';
 		 node.style.userSelect = 'none';
@@ -145,7 +154,7 @@
         height:{radius*2}px;
         aspect-ratio:1" 
     bind:this={casing}>
-    <div  use:dragMe class="absolute w-full h-full">
+    <div  use:dragMe class="absolute w-full h-full" bind:this={wheel}>
         <WheelGrid step={$scale_config.mode.division}/>
     </div>
     <div class="wheel circle w-full h-full border-palely  rounded-full"

@@ -56,7 +56,8 @@
     // }
     
     $: if (elem) {
-
+        // console.log(note_id)
+        // console.log('wkwk: ',$scale_config.mode.values[note_id])
         $scale_config.mode.values[note_id].angle = initDeg
     
         refreshNote()
