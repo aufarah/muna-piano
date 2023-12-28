@@ -33,4 +33,5 @@ let initial = {
 // }
 
 export const scale_config = writable(initial);
-export const  isKeyDown = writable(false)
+export const  isKeyDown = writable(false);
+export const  currTouches = writable({})

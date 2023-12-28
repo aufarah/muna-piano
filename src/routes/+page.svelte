@@ -19,9 +19,11 @@
 <div class="hill_2"></div>
 <div class="hill_1"></div>
 
-<CardTuning></CardTuning>
-<!-- </div> -->
-<Keyboard></Keyboard>
+<div class="flex flex-col justify-center items-center gap-y-8 mt-4">
+    <CardTuning></CardTuning>
+    <Keyboard></Keyboard>
+</div>
+
 
 
 

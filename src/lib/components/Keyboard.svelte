@@ -3,7 +3,26 @@
     import Key from '$lib/components/Key.svelte'
     let curr_frequency, frequency_values
 
+    let my_keyboard, width, curr_scroll=0;
+    let innerWidth = 0
+    let innerHeight = 0
 
+    // $: if(my_keyboard){
+    //     width =  my_keyboard.clientWidth
+    // }
+
+    $: if (innerWidth && my_keyboard && $scale_config){
+        width =  my_keyboard.scrollWidth - my_keyboard.offsetWidth
+    }
+
+    // $:{
+    //     console.log('::', innerHeight, innerWidth)
+    // }
+
+    // let scroll_keyboard = () => {
+    //     let width = my_keyboard.clientWidth;
+
+    // }
     
     $: if ($scale_config) {
         frequency_values = []
@@ -31,8 +50,17 @@
     }
 
 </script>
-<div>
-    <ul class="set anu">
+
+<svelte:window bind:innerWidth bind:innerHeight />
+
+<div class=" rounded-3xl bg-chocomilk w-full sm:w-fit px-4">
+    <div id="menu-keyboard" class="h-[2em] w-full rounded-3xl ">
+       
+    </div>
+    <!-- <div> -->
+        <input type="range" min="0" max={width} bind:value={curr_scroll} class="slider w-full" id="myRange" on:input={()=>{my_keyboard.scroll(curr_scroll,0)}} >
+    <!-- </div> -->
+    <ul class="keyboard" bind:this={my_keyboard}>
         {#each frequency_values as value}
             <Key frequency={value}></Key>
         {/each}

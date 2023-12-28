@@ -50,7 +50,7 @@ export let modes = [
                 division: 12
             },
             {
-                name : 'Aeolian (VI)',
+                name : 'Minor / Aeolian (VI)',
                 notes : [0,2,4,5,7,9,11],
                 root : 9,
                 division: 12
@@ -177,6 +177,17 @@ export let modes = [
                 root : 0,
                 division: 12
             },
+        ]
+    },
+    {
+        group_name : "Maqam Kurd",
+        member : [
+            {
+                name : 'Kurd',
+                notes : [0,2,3,5,7,9,10],
+                root : 0,
+                division: 12
+            }
         ]
     }
 ]

@@ -56,22 +56,28 @@
     }
 </script>
 
-<div class="card rounded-3xl p-8 h-fit min-w-[700px] max-w-[1000px] bg-chocomilk flex flex-row">
-    <div>
-        <select name="mode" id="mode" size="8" bind:value={selected_mode} on:change={pickFromList}>
+<div class="tuningcard">
+    <div class="w-[160px] mr-[3rem] h-full">
+        <h1>Tuning Palette</h1>
+
+        <select name="mode" id="mode" class="w-full h-full mt-2" size="10" bind:value={selected_mode} on:change={pickFromList} defa>
             {#each modes as group, group_idx}
             <optgroup label={group.group_name}>
                 {#each group.member as member, member_idx}
-                    <option value={[group_idx, member_idx]}>{member.name}</option>
+                    {#if (group_idx==1 && member_idx==0)}
+                        <option value={[group_idx, member_idx]} selected={true}>{member.name}</option>
+                    {:else}
+                        <option value={[group_idx, member_idx]}>{member.name}</option>
+                    {/if}
                 {/each}
             </optgroup>
             {/each}
         </select>
     </div>
-    <Wheel radius=140></Wheel>
-    <div class="ml-[3rem]">
+    <Wheel radius=100></Wheel>
+    <div class="sm:ml-[3rem] w-[160px]">
         <h1>Tuning</h1>
-        <div>
+        <div >
             <label for="pickBaseFreq" class="block">Base Frequency (Hz)</label>
             <input type="number" id="pickBaseFreq" bind:value={$scale_config['base_frequency']} list="baseFreq" >
 
