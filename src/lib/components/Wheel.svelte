@@ -31,7 +31,8 @@
     let add_note = () => {
 
         $scale_config.mode.values[nanoid()] = {
-            angle : Math.random()*$scale_config.mode.division
+            angle : Math.random()*$scale_config.mode.division,
+            note_name : Math.random().toString(36).substring(3,4)
         }
         $scale_config = $scale_config
     }
@@ -149,7 +150,7 @@
     // $:
 </script>
 
-<div class="relative case" style="
+<div class="relative case mb-4" style="
         width:{radius*2}px;
         height:{radius*2}px;
         aspect-ratio:1" 
@@ -169,5 +170,14 @@
         
         <!-- <Note bind:centerX bind:centerY radius={radius} initDeg={0*Math.PI/180}></Note> -->
     </div>
-    <button on:click={add_note}>Add Note</button>
+    <button class="button mt-4"
+        on:click={(e)=>{
+            // console.log(e)
+            // let posX = e.clientX;
+            // let posY = e.clientY;
+            // let deg = pos2unit(posX,posY)
+            // console.log(deg)
+            add_note ()
+        }}
+    >Add Note</button>
 </div>

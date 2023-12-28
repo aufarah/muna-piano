@@ -136,7 +136,7 @@ ul li:last-child {
 
 .hill_2 {
   position: absolute;
-  @apply bottom-0 left-0 w-full h-full ;
+  @apply bottom-[-24pt] sm:bottom-0 left-0 w-full h-full ;
   z-index: -50;
   background-image: url('$lib/assets/hill_back.png');
   @apply bg-[length:200%] md:bg-[length:100%];
@@ -158,5 +158,15 @@ ul li:last-child {
 
 .tuningcard {
   @apply rounded-3xl p-8 h-fit min-w-[280px] w-fit bg-chocomilk flex flex-col justify-center items-center ;
-  @apply sm:flex-row
+  @apply sm:flex-row;
+  box-shadow: 0px 10px 0px 5px var(--darkgreen);
+}
+
+.button {
+  @apply rounded-3xl border border-darkgreen  text-sm p-1;
+  box-shadow: 0px 3px 0px 2px var(--darkgreen);
+}
+
+.button:active {
+  box-shadow: 0px 0px 0px 0px var(--darkgreen);
 }

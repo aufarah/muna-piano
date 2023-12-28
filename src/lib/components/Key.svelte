@@ -4,6 +4,8 @@
     import {currTouches} from './stores'
 
     export let frequency
+
+    Tone.start()
     
     let me, my_touch_id;
 
@@ -15,6 +17,7 @@
         setTimeout(() => { 
             synth.dispose()
         }, 250+1000)
+        Tone.start() 
     }
 
     function fire_mousemove(){
@@ -49,7 +52,7 @@
 
 
     on:touchstart|preventDefault={(e)=>{
-        $isKeyDown = true
+        // $isKeyDown = true
         me.classList.add('active')
         let i = 0
         for (let touch of e.touches){
@@ -59,10 +62,10 @@
             }
             i++;
         }
-        fire()
+        fire_mouse()
     }}
 
-    on:touchmove={(e)=>{
+    on:touchmove|preventDefault={(e)=>{
         let touches = e.touches[my_touch_id]
         let x = touches.clientX
         let y = touches.clientY
@@ -72,8 +75,7 @@
                 if ($currTouches[my_touch_id] != undefined){
                     $currTouches[my_touch_id].dispatchEvent(new Event('mouseleave'));
                 }
-                $currTouches = []
-                button.dispatchEvent(new Event('mouseenter'));
+                button.dispatchEvent(new Event('touchenter'));
                 $currTouches[my_touch_id] = button;
             } 
         }
@@ -87,6 +89,11 @@
     on:mouseenter={()=>{
         fire_mousemove()
     }} 
+
+    on:touchenter = {()=>{
+        me.classList.add('active')
+        fire()
+    }}
     
     on:mouseup={release}
 
@@ -101,6 +108,9 @@
         if ($currTouches[my_touch_id] != undefined){
             $currTouches[my_touch_id].dispatchEvent(new Event('mouseleave'));
         }
+        my_touch_id = undefined;
 
     }}
-    bind:this={me} ></button>
+    bind:this={me} >
+<!-- {} -->
+</button>

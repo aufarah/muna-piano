@@ -36,7 +36,6 @@
                                 curr_key = $scale_config.mode.values[key]['angle'] - $scale_config.mode.root
                                 curr_key += $scale_config.mode.division*(curr_key<0)
                                 curr_key = curr_key%$scale_config.mode.division
-                                console.log(curr_key)
                                 curr_frequency = ($scale_config.base_frequency * $scale_config.scale_ratio**(i + curr_key/$scale_config.mode.division) )
                                 break;
                         }
@@ -53,7 +52,7 @@
 
 <svelte:window bind:innerWidth bind:innerHeight />
 
-<div class=" rounded-3xl bg-chocomilk w-full sm:w-fit px-4">
+<div class="card rounded-3xl bg-chocomilk w-full sm:w-fit px-4">
     <div id="menu-keyboard" class="h-[2em] w-full rounded-3xl ">
        
     </div>

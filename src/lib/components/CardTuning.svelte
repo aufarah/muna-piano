@@ -9,6 +9,16 @@
     let unit = $scale_config.mode.unit
     let selected_mode = [1,0]
 
+    let innerWidth = undefined
+    let innerHeight = undefined
+    let not_mobile = true;
+
+    $: if(innerWidth<=640){
+        not_mobile = false;
+    } else {
+        not_mobile = true
+    }
+
     let pickFromList = () => {
         let i = 1
         let values = {}
@@ -56,11 +66,80 @@
     }
 </script>
 
+<style>
+
+/* Core styles/functionality */
+.tab_input {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+}
+.tab__content {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.35s;
+}
+.tab_input:checked ~ .tab__content {
+  max-height: 100%;
+}
+
+.tab__label,
+.tab__close {
+  text-align: left;
+  display: flex;
+  color: var(--darkgreen);
+  background: var(--theme);
+  cursor: pointer;
+}
+.tab__label {
+  justify-content: space-between;
+}
+.tab__label::after {
+  content: "\276F";
+  width: 1em;
+  height: 1em;
+  text-align: center;
+  transform: rotate(90deg);
+  transition: all 0.35s;
+}
+.tab_input:checked + .tab__label::after {
+  transform: rotate(270deg);
+}
+.tab__content p {
+  margin: 0;
+  padding: 1rem;
+}
+.tab__close {
+  justify-content: flex-end;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+}
+.accordion--radio {
+  --theme: var(--secondary);
+}
+
+/* Arrow animation */
+.tab_input:not(:checked) + .tab__label:hover::after {
+  animation: bounce .5s infinite;
+}
+@keyframes bounce {
+  25% {
+    transform: rotate(90deg) translate(.25rem);
+  }
+  75% {
+    transform: rotate(90deg) translate(-.25rem);
+  }
+}
+
+</style>
+
+<svelte:window bind:innerWidth bind:innerHeight />
+
 <div class="tuningcard">
-    <div class="w-[160px] mr-[3rem] h-full">
+    <div class="w-[160px] mr-[3rem] h-full sm:mb-0 mb-8">
         <h1>Tuning Palette</h1>
 
-        <select name="mode" id="mode" class="w-full h-full mt-2" size="10" bind:value={selected_mode} on:change={pickFromList} defa>
+        <select name="mode" id="mode" class="w-full h-full mt-2" size={not_mobile*10} bind:value={selected_mode} on:change={pickFromList} defa>
             {#each modes as group, group_idx}
             <optgroup label={group.group_name}>
                 {#each group.member as member, member_idx}
@@ -75,24 +154,32 @@
         </select>
     </div>
     <Wheel radius=100></Wheel>
-    <div class="sm:ml-[3rem] w-[160px]">
-        <h1>Tuning</h1>
-        <div >
-            <label for="pickBaseFreq" class="block">Base Frequency (Hz)</label>
-            <input type="number" id="pickBaseFreq" bind:value={$scale_config['base_frequency']} list="baseFreq" >
+    <div class="sm:ml-[3rem] w-[160px] self-start sm:mt-0 mt-8">
+        <section class="accordion">
+            <div class="tab">
+              <input type="checkbox" name="accordion-1" id="cb1" checked={not_mobile} class="tab_input">
+              <label for="cb1" class="tab__label"><h1>Tuning</h1></label>
+              <div class="tab__content">
+                <div >
+                    <label for="pickBaseFreq" class="block">Base Frequency (Hz)</label>
+                    <input type="number" id="pickBaseFreq" bind:value={$scale_config['base_frequency']} list="baseFreq" >
+        
+        
+                    <label for="division" class="block">Division</label>
+                    <input type="number" id="division" bind:value={division} list="commonStep" >
+        
+                    <label for="scale_ratio" class="block">Scale Ratio</label>
+                    <input type="number" id="scale_ratio" bind:value={$scale_config['scale_ratio']} list="commonRatio" >
+                </div>
+        
+                <div class="mt-4">
+                    <input id="clipping" class="checkbox" type="checkbox" bind:checked={$scale_config['clipping']} />
+                    <label class="ml-2" for="clipping">Turn on Clipping</label>
+                </div>
+              </div>
+            </div>
+        </section>
 
-
-            <label for="division" class="block">Division</label>
-            <input type="number" id="division" bind:value={division} list="commonStep" >
-
-            <label for="scale_ratio" class="block">Scale Ratio</label>
-            <input type="number" id="scale_ratio" bind:value={$scale_config['scale_ratio']} list="commonRatio" >
-        </div>
-
-        <div class="mt-4">
-            <input id="clipping" class="checkbox" type="checkbox" bind:checked={$scale_config['clipping']} />
-            <label class="ml-2" for="clipping">Turn on Clipping</label>
-        </div>
 
     </div>
 </div>
