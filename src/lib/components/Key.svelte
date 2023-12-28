@@ -5,7 +5,7 @@
 
     export let frequency
     
-    let me;
+    let me, my_touch_id;
 
     
     function fire(){
@@ -55,7 +55,7 @@
         for (let touch of e.touches){
             if (touch.target== me) {
                 $currTouches[String(i)] = me;
-                console.log($currTouches);
+                my_touch_id = i
             }
             i++;
         }
@@ -63,28 +63,20 @@
     }}
 
     on:touchmove={(e)=>{
-        // console.log(e.touches)
-        for (let touch of e.touches){
-            console.log(touch)
-        }
-        let touches = e.touches[0]
+        let touches = e.touches[my_touch_id]
         let x = touches.clientX
         let y = touches.clientY
         let button = document.elementFromPoint(x, y)
         if(button){
-            if(!$currTouches.includes(button)) {
-                if ($currTouches.length>0){
-                    for (let item of $currTouches){
-                        item.dispatchEvent(new Event('mouseleave'));
-                    }
+            if($currTouches[my_touch_id] != button) {
+                if ($currTouches[my_touch_id] != undefined){
+                    $currTouches[my_touch_id].dispatchEvent(new Event('mouseleave'));
                 }
                 $currTouches = []
                 button.dispatchEvent(new Event('mouseenter'));
-                $currTouches = $currTouches.concat(button)
+                $currTouches[my_touch_id] = button;
             } 
         }
-        
-        // console.log(button)
     }}
 
     on:mousedown={()=>{
@@ -101,7 +93,14 @@
     on:mouseleave = {()=>{
         me.classList.remove('active')
    }}
-    on:touchend={()=>{
-         me.classList.remove('active')
+    on:touchend={(e)=>{
+        me.classList.remove('active');
+        $isKeyDown = false;
+
+        let i = 0
+        if ($currTouches[my_touch_id] != undefined){
+            $currTouches[my_touch_id].dispatchEvent(new Event('mouseleave'));
+        }
+
     }}
     bind:this={me} ></button>
