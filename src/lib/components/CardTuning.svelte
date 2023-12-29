@@ -20,12 +20,17 @@
     }
 
     let pickFromList = () => {
-        let i = 1
+        let i = 0
         let values = {}
         let my_mode = modes[selected_mode[0]].member[selected_mode[1]]
+
         for (let item of  my_mode.notes){
+            let note_name = i+1;
+            if(my_mode.note_names!=undefined){
+                note_name = my_mode.note_names[i]
+            }
             values[nanoid() ] = {
-                note_name : i,
+                note_name,
                 angle : item
             }
             i++;
@@ -194,12 +199,13 @@
 <datalist id="commonStep">
     <option value="12">12 TET (Western)</option>
     <option value="24">24 TET (Middle Eastern)</option>
-    <option> 5 </option>
-    <option>7</option>
-    <option>9</option>
+    <option value="5"> 5 TET (Nusantaran) </option>
 </datalist>
 
-<datalist id="baseFreq">
+<datalist id="commonRatio">
+    <option value="1.98">1.98 (Embat Larasati)</option>
     <option value="2">2 (Octave)</option>
+    <option value="2.02">2.02 (Embat Sundari)</option>
+    <option value="2.04">2.04 (Embat Mucuk bung)</option>
     <option value="3">3 (Tritave)</option>
 </datalist>

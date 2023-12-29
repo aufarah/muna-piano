@@ -3,6 +3,13 @@ export let modes = [
         group_name : 'TET',
         member : [
             {
+                name : '5 TET',
+                notes : [...Array(5).keys()],
+                note_names : [1,2,3,5,6],
+                root : 0,
+                division: 5
+            },
+            {
                 name : '12 TET',
                 notes : [...Array(12).keys()],
                 root : 0,
@@ -96,6 +103,56 @@ export let modes = [
                 root : 8,
                 division: 12
             }
+        ]
+    },
+    {
+        group_name : "Pelogs",
+        member : [
+            {
+                name : "Pelog Pentatonic (12 TET)",
+                notes : [0,1,3,7,8],
+                root : 0,
+                division: 12
+            },
+            {
+                name : "Pelog Heptatonic (12 TET)",
+                notes: [0,1,3,6,7,8,10],
+                root : 0,
+                division: 12
+            },
+            {
+                name : "Pelog Barang",
+                notes: [  1,3,  7,8,10],
+                note_names: [2,3,5,6,7],
+                root : 0,
+                division: 12
+            },
+            {
+                name : "Pelog Bem",
+                notes: [0,1,  6,7,8],
+                note_names: [1,2,4,5,6],
+                root : 0,
+                division: 12
+            }
+        ]
+    },
+    {
+        group_name : "Slendro",
+        member : [
+            {
+                name : "Slendro / 5 TET",
+                notes : [...Array(5).keys()],
+                note_names : [1,2,3,5,6],
+                root : 0,
+                division: 5
+            },
+            {
+                name : "Slendro on 12 TET",
+                notes : [0,2,5,7,10],
+                note_names : [1,2,3,5,6],
+                root : 0,
+                division: 12
+            },
         ]
     },
     {

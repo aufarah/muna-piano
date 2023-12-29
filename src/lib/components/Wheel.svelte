@@ -24,10 +24,10 @@
 
 
     $: if(wheel){
-        // console.log($scale_config.mode)
         wheel.style.transform = `rotate(${$scale_config.mode.root/$scale_config.mode.division * 360}deg)`
     }
 
+    $: console.log($scale_config.mode)
     let add_note = () => {
 
         $scale_config.mode.values[nanoid()] = {
