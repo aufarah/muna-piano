@@ -1,6 +1,8 @@
 # Muna Piano 
 *Muna Piano support Palestinian struggle for freedom. Glory to Palestinian people 🍉*
 
+Deployment : [Muna Piano](https://munapiano.netlify.app/)
+
 ## 😬 A bit reasoning
 Our usual piano/keyboard consists basically of 12 notes, alternating between white and black keys. The interval between each note to the next note is same, which is commonly called as semitone. 
 

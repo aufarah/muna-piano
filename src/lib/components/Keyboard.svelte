@@ -8,6 +8,7 @@
     let innerHeight = 0
 
     let scale_step = 2
+    let note_size;
     // $: if(my_keyboard){
     //     width =  my_keyboard.clientWidth
     // }
@@ -27,6 +28,8 @@
     
     $: if ($scale_config) {
         key_members = []
+        note_size = Object.keys($scale_config.mode.values).length
+        // console.log(Object.keys($scale_config.mode))
         let curr_key = 0
 
         if ($scale_config.mode.division>0){
@@ -73,8 +76,8 @@
         <input type="range" min="0" max={width} bind:value={curr_scroll} class="slider w-full" id="myRange" on:input={()=>{my_keyboard.scroll(curr_scroll,0)}} >
     <!-- </div> -->
     <ul class="keyboard" bind:this={my_keyboard}>
-        {#each key_members as member}
-            <Key key_data={member}></Key>
+        {#each key_members as member, idx}
+            <Key key_data={member} index={idx%note_size+1}></Key>
         {/each}
         
       </ul>

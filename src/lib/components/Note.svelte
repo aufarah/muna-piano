@@ -236,7 +236,7 @@
 
 
 <button use:dragMe use:clickOutside={popper_hide} class="note rounded-full w-[15%] h-[15%] origin-center -ml-[7.5%] -mt-[7.5%] bg-orange" bind:this={elem} on:contextmenu|preventDefault={()=>{popper_show(); return false}}>
-    <button on:click={popper_show} class="note note_button  ">{$scale_config.mode.values[note_id]['note_name']}</button>
+    <button on:click={popper_show} class="note note_button  "></button>
     {#if popper}
     <div use:clickOutside={popper_hide}>
         <ContextNote note_id={note_id} ></ContextNote>

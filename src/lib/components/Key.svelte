@@ -3,11 +3,11 @@
     import {isKeyDown} from "./stores"
     import {currTouches} from './stores'
 
-    export let key_data
+    export let key_data, index;
 
     let frequency;
 
-    $: if(key_data) {
+    $: if(key_data&&index) {
         frequency = key_data.value
     }
     
@@ -119,5 +119,6 @@
     bind:this={me} >
 <!-- {} -->
     <div class="bg-darkgreen aspect-square w-[14pt]  rounded-full grid place-items-center text-xs text-white">{key_data.scale_step}</div>
-    <div class="bg-orange aspect-square w-[23pt]  rounded-full grid place-items-center">{key_data.note_name}</div>
+    <!-- <div class="bg-orange aspect-square w-[23pt]  rounded-full grid place-items-center">{key_data.note_name}</div> -->
+    <div class="bg-orange aspect-square w-[23pt]  rounded-full grid place-items-center">{index}</div>
 </button>
