@@ -54,7 +54,6 @@
 
 <div class="card rounded-3xl bg-chocomilk w-full sm:w-fit px-4">
     <div id="menu-keyboard" class="h-[2em] w-full rounded-3xl ">
-       
     </div>
     <!-- <div> -->
         <input type="range" min="0" max={width} bind:value={curr_scroll} class="slider w-full" id="myRange" on:input={()=>{my_keyboard.scroll(curr_scroll,0)}} >

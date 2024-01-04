@@ -1,38 +1,33 @@
-# create-svelte
+# Muna Piano 
+*Muna Piano support Palestinian struggle for freedom. Glory to Palestinian people 🍉*
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+## A bit reasoning
+Our usual piano/keyboard consists basically of 12 notes, alternating between white and black keys. The interval between each note to the next note is same, which is commonly called as semitone. 
 
-## Creating a project
+But there's some catches:
+- Sometimes we don't really need all of those 12 keys, maybe we just want to play simple pentatonic music with 5 notes. 
+- This is more serious than the first one: Sometimes the 12 notes isn't sufficient because there's no key needed there. For example, in many Middle Eastern maqams/scale contains microtonal note (the interval between note may smaller than a semitone)
 
-If you're seeing this, you've probably already done this step. Congrats!
+These issue can be easily resolved if we just **create** our own musical instrument down to tuning each specific key there.
+## 🎹 What's Muna Piano? 
+> Muna Piano is highly **customizable** online musical Instrument.
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+. It offers ability to tune specifically each key, experimenting with any musical scale, and let everyone explore many world musical tradition by supporting microtonal and non-octavian music system. **Muna Piano let you create your own musical instrument**.
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+## 🎶 Features 
+- Ability to change music scale visually 👀
+    - Scale visualisation as circle
+    - Draggable note with clipping
+- Easy to use piano on desktop and mobile 📱
+    - Support for multitouch
+- Pre-existing musical mode (western, middle eastern, asian) 🎶
+    - Will be added more.. more.. and more
 
-## Developing
+## Screenshots
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+## Backlogs
+- Showing note name on keyboard's key
+- More synthesizer options
+- Documentation (on going)
+- Support for saving and loading scale config
+- Support for SCALA file format

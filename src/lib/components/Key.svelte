@@ -2,8 +2,9 @@
     import * as Tone from 'tone'
     import {isKeyDown} from "./stores"
     import {currTouches} from './stores'
+    import {scale_config} from "./stores.js"
 
-    export let frequency
+    export let frequency, note_id
 
     Tone.start()
     
@@ -113,4 +114,5 @@
     }}
     bind:this={me} >
 <!-- {} -->
+{$scale_config.}
 </button>
