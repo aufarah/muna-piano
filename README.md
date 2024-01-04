@@ -1,7 +1,7 @@
 # Muna Piano 
 *Muna Piano support Palestinian struggle for freedom. Glory to Palestinian people 🍉*
 
-## A bit reasoning
+## 😬 A bit reasoning
 Our usual piano/keyboard consists basically of 12 notes, alternating between white and black keys. The interval between each note to the next note is same, which is commonly called as semitone. 
 
 But there's some catches:
@@ -23,10 +23,10 @@ These issue can be easily resolved if we just **create** our own musical instrum
 - Pre-existing musical mode (western, middle eastern, asian) 🎶
     - Will be added more.. more.. and more
 
-## Screenshots
+## 📸 Screenshots
+![Muna Desktop](ss_muna.png)
 
-## Backlogs
-- Showing note name on keyboard's key
+## 🗒️ Backlogs
 - More synthesizer options
 - Documentation (on going)
 - Support for saving and loading scale config

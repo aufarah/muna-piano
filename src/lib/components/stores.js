@@ -10,7 +10,7 @@ import { nanoid } from 'nanoid'
 
 let initial = {
     "name" : "my_scale",
-    "base_frequency" : 440,
+    "base_frequency" : 261.63,
     "scale_ratio": 2, //an octave 2:1
     "mode" : {
         "unit" : "division",
