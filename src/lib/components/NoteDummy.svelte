@@ -1,8 +1,6 @@
 <script>
-    export let radius, centerX,centerY,initDeg
-    export let note_id
-    import ContextNote from "./ContextNote.svelte";
-    import {scale_config} from "./stores.js";
+    export let radius, centerX,centerY,initDeg, note_name
+    export let division
     import {clickOutside} from "./clickOutside";
 
     let elem;
@@ -29,8 +27,6 @@
 
     
     $: if (elem) {
-        $scale_config.mode.values[note_id].angle = initDeg
-    
         refreshNote()
     }
     
@@ -43,12 +39,8 @@
     }
 
     function rad2unit(rad){
-        switch ($scale_config.mode.unit){
-            case 'division':
-                let deg = rad * $scale_config.mode.division / (2*Math.PI)
-                return deg
-                break;
-        }
+        let deg = rad * division / (2*Math.PI)
+        return deg
     }
 
     function pos2unit(posX,posY){
@@ -56,21 +48,13 @@
         let dX = posX - centerX
         let dY = posY- centerY
         let deg = Math.atan2(dY,dX)+Math.PI/2
-        switch ($scale_config.mode.unit){
-            case 'division':
-                deg = deg * $scale_config.mode.division / (2*Math.PI)
-                break;
-        }
+        deg = deg * division / (2*Math.PI)
         return deg
     }
 
     function unit2pos(deg){
-        //output will be relative to casing
-        switch ($scale_config.mode.unit){
-            case 'division':
-                deg = deg * 2*Math.PI/($scale_config.mode.division)
-                break;
-        }
+
+        deg = deg * 2*Math.PI/(division)
         let posX = radius * Math.cos(deg-Math.PI/2) + centerX - (centerX-radius)
         let posY = radius * Math.sin(deg-Math.PI/2) + centerY - (centerY-radius)
         return [posX, posY];
@@ -106,19 +90,8 @@
                      
                      let deg = pos2unit(touches.pageX,touches.pageY )
 
-                    //rounding logic
-                    if ($scale_config.clipping){
-                        switch ($scale_config.mode.unit){
-                            case 'division':
-                                deg = Math.round(deg)
-                                break;
-                            default:  //radian
-                                let in12 = deg/(2*Math.PI) * $scale_config.mode.division
-                                deg = (2 * Math.PI) * Math.round(in12) / $scale_config.mode.division 
-                                break;
-                        }
+                     deg = Math.round(deg)
 
-                     }
 
                      initDeg = deg
                      let coord = unit2pos(deg)
@@ -150,26 +123,13 @@
 
 
                     let deg = pos2unit(e.pageX,e.pageY)
+                    deg = Math.round(deg)
 
-                    //rounding logic
-                    if ($scale_config.clipping){
-                        switch ($scale_config.mode.unit){
-                            case 'division':
-                                deg = Math.round(deg)
-                                break;
-                            default:  //radian
-                                let in12 = deg/(2*Math.PI) * $scale_config.mode.division
-                                deg = (2 * Math.PI) * Math.round(in12) / $scale_config.mode.division 
-                                break;
-                        }
+                    initDeg = deg
+                    let coord = unit2pos(deg)
 
-                     }
-
-                     initDeg = deg
-                     let coord = unit2pos(deg)
-
-					 node.style.top = `${coord[1]}px`;
-					 node.style.left = `${coord[0]}px`;
+                    node.style.top = `${coord[1]}px`;
+                    node.style.left = `${coord[0]}px`;
 				}
          })
 
@@ -205,10 +165,5 @@
 
 
 <button use:dragMe use:clickOutside={popper_hide} class="note rounded-full w-[15%] h-[15%] origin-center -ml-[7.5%] -mt-[7.5%] bg-orange" bind:this={elem} on:contextmenu|preventDefault={()=>{popper_show(); return false}}>
-    <button on:click={popper_show} class="note note_button  "></button>
-    {#if popper}
-    <div use:clickOutside={popper_hide}>
-        <ContextNote note_id={note_id} ></ContextNote>
-    </div>
-    {/if}
+    <button on:click={popper_show} class="note note_button  ">{note_name}</button>
 </button>

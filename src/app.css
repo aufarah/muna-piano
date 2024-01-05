@@ -25,8 +25,24 @@ h1 {
   @apply text-xl font-bold font-[Montserrat] text-darkgreen;
 }
 
-p {
+h2 {
+  @apply text-lg font-bold font-[Montserrat] text-darkgreen;
+}
+
+h3 {
+  @apply text-base font-bold font-[Montserrat] text-darkgreen;
+}
+
+h4 {
+  @apply text-sm font-bold font-[Montserrat] text-darkgreen;
+}
+
+p, details, .caption{
   @apply text-sm font-[Montserrat] text-darkgreen;
+}
+
+details {
+  margin-top: 5pt;
 }
 
 label {
@@ -57,6 +73,9 @@ input.checkbox{
   /* box-shadow:0 0 50px rgba(0,0,0,0.5) inset,0 1px rgba(212,152,125,0.2) inset,0 5px 15px rgba(0,0,0,0.5) */
 }
 
+audio {
+  display: block;
+}
 li {
   margin:0;
   padding:0;
@@ -170,4 +189,8 @@ ul li:last-child {
 
 .button:active {
   box-shadow: 0px 0px 0px 0px var(--darkgreen);
+}
+
+.figure {
+  @apply flex flex-col justify-center items-center my-4
 }

@@ -1,15 +1,10 @@
 <script>
-    export let radius;
+    export let radius, division, root, note_list;
 
 
     import { onDestroy, onMount } from "svelte";
-    import Note from "./Note.svelte";
+    import Note from "./NoteDummy.svelte";
     import WheelGrid from "./WheelGrid.svelte";
-
-    import {scale_config} from "./stores.js";
-
-    import { nanoid } from 'nanoid'
-    import ContextNote from "./ContextNote.svelte";
 
     let casing, centerX, centerY,center, centerLeft,centerTop, borderWidth=16;
     let wheel;
@@ -23,29 +18,13 @@
     })
 
 
-    $: if(wheel){
-        wheel.style.transform = `rotate(${$scale_config.mode.root/$scale_config.mode.division * 360}deg)`
-    }
-
-    let add_note = () => {
-
-        $scale_config.mode.values[nanoid()] = {
-            angle : Math.random()*$scale_config.mode.division,
-            note_name : Math.random().toString(36).substring(3,4)
-        }
-        $scale_config = $scale_config
-    }
-
     function pos2unit(posX,posY){
         //input are absolute to page
         let dX = posX - centerX
         let dY = posY- centerY
         let deg = Math.atan2(dY,dX)+Math.PI/2
-        switch ($scale_config.mode.unit){
-            case 'division':
-                deg = deg * $scale_config.mode.division / (2*Math.PI)
-                break;
-        }
+        deg = deg * division / (2*Math.PI)
+
         return deg
     }
 
@@ -80,23 +59,11 @@
 					 top += movementTop
                      
                      let deg = pos2unit(touches.pageX,touches.pageY )
+                    deg = Math.round(deg)
 
-                    //rounding logic
-                    if ($scale_config.clipping){
-                        switch ($scale_config.mode.unit){
-                            case 'division':
-                                deg = Math.round(deg)
-                                break;
-                            default:  //radian
-                                let in12 = deg/(2*Math.PI) * $scale_config.mode.division
-                                deg = (2 * Math.PI) * Math.round(in12) / $scale_config.mode.division 
-                                break;
-                        }
 
-                     }
-
-                     $scale_config.mode.root = deg
-                     node.style.transform = `rotate(${$scale_config.mode.root/$scale_config.mode.division * 360}deg)`
+                     root = deg
+                     node.style.transform = `rotate(${root/division * 360}deg)`
                      
                      e.preventDefault();
 				}
@@ -120,23 +87,10 @@
 
 
                     let deg = pos2unit(e.pageX,e.pageY)
+                    deg = Math.round(deg)
 
-                    //rounding logic
-                    if ($scale_config.clipping){
-                        switch ($scale_config.mode.unit){
-                            case 'division':
-                                deg = Math.round(deg)
-                                break;
-                            default:  //radian
-                                let in12 = deg/(2*Math.PI) * $scale_config.mode.division
-                                deg = (2 * Math.PI) * Math.round(in12) / $scale_config.mode.division 
-                                break;
-                        }
-
-                     }
-
-                     $scale_config.mode.root = deg
-                     node.style.transform = `rotate(${$scale_config.mode.root/$scale_config.mode.division * 360}deg)`
+                     root = deg
+                     node.style.transform = `rotate(${root/division * 360}deg)`
 				}
          })
 
@@ -155,29 +109,17 @@
         aspect-ratio:1" 
     bind:this={casing}>
     <div  use:dragMe class="absolute w-full h-full" bind:this={wheel}>
-        <WheelGrid step={$scale_config.mode.division}/>
+        <WheelGrid step={division}/>
     </div>
     <div class="wheel circle w-full h-full border-palely  rounded-full"
         style="
             border-width: {borderWidth/2}px;
             box-shadow : 0px 0px 0px {borderWidth/2}px var(--palely);
         ">
-
-        <slot/>
-        {#each Object.keys($scale_config.mode.values) as note_key}
-            <Note centerX={centerX} centerY={centerY} radius={radius} initDeg={$scale_config.mode.values[note_key].angle} note_id={note_key}></Note>
+        {#each note_list as note_key}
+            <Note centerX={centerX} centerY={centerY} radius={radius} initDeg={note_key.value} division={division} note_name={note_key.name}></Note>
         {/each}
         
         <!-- <Note bind:centerX bind:centerY radius={radius} initDeg={0*Math.PI/180}></Note> -->
     </div>
-    <button class="button mt-4"
-        on:click={(e)=>{
-            // console.log(e)
-            // let posX = e.clientX;
-            // let posY = e.clientY;
-            // let deg = pos2unit(posX,posY)
-            // console.log(deg)
-            add_note ()
-        }}
-    >Add Note</button>
 </div>

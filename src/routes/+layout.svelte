@@ -5,6 +5,9 @@
 
 <div class="app">
 	<!-- <Header /> -->
+	<div class="hill_2"></div>
+<div class="hill_1"></div>
+
 	<main class="h-screen w-screen">
 		<Navbar></Navbar>
 		<slot />
