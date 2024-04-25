@@ -1,7 +1,6 @@
 <script>
     import CardTuning from '../lib/components/CardTuning.svelte';
     import Keyboard from'$lib/components/Keyboard.svelte';
-	import ss_muna from "../lib/assets/ss_muna.png"
 </script>
 
     <!-- <div class="bg-teal-400 h-[50%]"></div> -->
