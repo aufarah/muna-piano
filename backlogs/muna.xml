@@ -1,0 +1,30 @@
+<muna>
+    <meta
+        owner="Achmad Sanusi"
+        title="17 Agustus 45"/>
+    <tuning
+        name="My Scale"
+        base_frequency="440"
+        unit="division"
+        relative="True"
+        values="[30,30,30,60,30,60,60,30,30]"
+        />
+    <instruments>
+        <instrument/>
+    </instruments>
+    <global></global>
+    <track>
+
+    </track>
+</muna>
+
+{
+    "name" : "my_scale",
+    "base_frequency" : 440,
+    "mode" : {
+        "type" : "degree | cents | division",
+        "division" : 12, //not always needed
+        "relative": true,
+        "values" : [30,30,30,60,30,60,60,30,30] //should sum up to 360 if degree. If division must sum up to "type" value
+    }
+}
